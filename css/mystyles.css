@@ -28,12 +28,14 @@
     .col-12 {width: 100%;}
 }
 
+body > section:not(.active) { display:none; }
+
 .repos {
     display: inline-block;
 }
 
 body {
-    background-color: #D6DBDF; 
+    background-color: #808B96; 
 }
 
 
@@ -68,9 +70,3 @@ body {
     background-color: #4CAF50;
     color: white;
 }
-
-.footer {
-    position:fixed;
-    bottom:0;
-}
-

@@ -6,58 +6,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GitFilter</title>
     <link href="css/mystyles.css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+  <!-- Optional theme -->
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
 </head>
 <body>
   <div class="row .col-12 forimg">
     <img src="images/img1.png" class="octocatimg" width="30%">
   </div>
-  <div class="row .col-4">
+  <div class="row .col-4" class="inBt">
     <input type="text" placeholder="Username/Organization" id="userInput">
     </div>
-    <div class="row .col-4">
-    <button type="submit" id="submitButton" onclick="inputToVar()">Submit</button> 
+    <div class="row .col-4" class="inBt">
+    <button type="submit" id="submitButton" onclick="inputToVar()" >Submit</button> 
   </div>
 
   <div class='row' id="reposSections">
-  <!--    <table >
-          <tr>
-              <th id=reposName></th>
-          </tr>
-          <tr>
-              <td id=reposDescription>
-              </td>
-          </tr>
-           <tr>
-              <td id=reposForks>
-              </td>
-          </tr>
-          <tr>
-              <td id=reposStars>
-              </td>
-          </tr>
-          <tr>
-              <td id=reposDate>
-              </td>
-          </tr>
-          <tr>
-              <td id=reposLanguage>
-              </td>
-          </tr>
-      </table>-->
+     
   </div>
 
-  <footer class="footer">
-    <div class="row">
-    <div class=".col-12">
-      <p>© 2017<br>
-        Made by Oksana Korniienko</p>
-    </div>
-  </div>
-</footer>
 
 
   <script>
+
+    $(document).ready(function(){
+    $("#submitButton").click(function(){
+        $("#submitButton").toggle();
+        $("#userInput").toggle();
+    });
+});
+      
 
       $(document).ready(function(){
     $("#userInput").keypress(function(e){
@@ -75,25 +57,49 @@ function inputToVar() {
 }
 
 
+
 //https://api.github.com/orgs/kottans/repos
 
     var repos;
     $(document).ready(function(){
     $("#submitButton").click(function(){
         $.getJSON(gitUrl, function(result){
+
+        var repos = result;
+
+
             $.each(result, function(i, repos){
-              $("#reposSections").append("<div class='col-3 repos'>" + repos.name + "<br>" + repos.description + "<br>" + repos.forks_url + "<br>" +  repos.stargazers_count + 
-              "<br>" + repos.updated_at + "<br>" + repos.language + "<br><br><br> </div>");
-            //   $("#reposSections" ).append(repos.description + "<br>");
-            //   $("#reposSections").append(repos.forks_url + "<br>");
-            //   $("#reposSections").append(repos.stargazers_count + "<br> ");
-            //   $("#reposSections").append(repos.updated_at + "<br> ");
-            //   $("#reposSections").append(repos.language + "</div>");
-            });
+                if (repos.description === null) {
+
+                repos.description = "No discription";}
+                //if (repos.length > 6) { }
+              $("#reposSections").append(
+                  "<div class='col-xs-12 col-sm-6 col-lg-6 repos panel panel-primary'><div class='panel-heading'><h3 class='panel-title'>" + 
+                  repos.name + "</h3></div> <div class='panel-body'><dl class='dl-horizontal'><dt>Forks</dt>" + "<dd>" + repos.forks_url + 
+                  "</dd><dt>Language</dt>" + "<dd>" + repos.language + "</dd><dt>Last update</dt>" + "<dd>" + repos.updated_at +
+                   "</dd><dt>Stars</dt>" + "<dd>" + repos.stargazers_count + "</dd></dl></div></div>"
+            )});
         });
     });
 });
-   
+
+
+
+  // repos.length
+
+//    $(document).ready(function () {
+//     size_repos = $("result array").size();
+//     x=6;
+//     $('repos:lt('+x+')').show();
+//     $('#loadMore').click(function () {
+    //     x= (x+6 <= size_repos) ? x+6 : size_repos;
+    //     $('repos:lt('+x+')').show();
+    // });
+    // $('#showLess').click(function () {
+    //     x=(x-5<0) ? 3 : x-5;
+    //     $('repos').not(':lt('+x+')').hide();
+    // });
+// });
    /* $(document).ready(function(){
     $("#submitButton").click(function(){
         $.getJSON(gitUrl, function(result){
